@@ -1,23 +1,30 @@
-#include<iostream>
+#include <iostream>
 #include <oneapi/tbb.h>
 
 #define DATA_POLICY static
+#define TRANSPOSE_POLICY static
+
 using DataPartitioner = oneapi::tbb::simple_partitioner;
-static DataPartitioner a;
+static DataPartitioner dataPart;
+
+using TransposePartitioner = oneapi::tbb::simple_partitioner;
+static TransposePartitioner transPart;
+
+using InValType = float;
 
 #include "dataV2.hpp"
 
 int main(int argc, char const *argv[])
 {
-    // pad::arrayDataV2<float> dataS(4, 3);
+    // pad::arrayDataV2<InValType> dataS(4, 3);
     // dataS.printA();
     // dataS.printB();
 
-    // pad::arrayDataV2<float> dataOMP(11, 13, 4, "OMP");
+    // pad::arrayDataV2<InValType> dataOMP(11, 13, 4, "OMP");
     // dataOMP.printA();
     // dataOMP.printB();
 
-    pad::arrayDataV2<float> dataTBB(11, 13, 4, "TBB", a);
+    pad::arrayDataV2<InValType> dataTBB(11, 13, 4, "TBB", dataPart);
     dataTBB.printA();
     dataTBB.printB();
 
